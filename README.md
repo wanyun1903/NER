@@ -15,7 +15,8 @@ Python3
 
 ## Running the flask application with an existing image on docker hub
 * The containerize flask application can be found at https://hub.docker.com/repository/docker/capstone05/ner  
-* Thus, we can run the application with the following command: 
+* Firstly, Run docker in the backgroud
+* Then, we can run the application with the following command: 
 ```
 docker run capstone05/ner
 ```
