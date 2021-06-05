@@ -41,7 +41,7 @@ def index():
 
 def allowed_file(filename):
     '''
-    Returns: Bool 
+    Returns: Bool
     Parameter value: filename as str
     '''
     ALLOWED_EXTENSIONS = set(['json'])
@@ -56,7 +56,7 @@ def read_json_file(filename):
     with open(filename) as f:
         json_data = json.load(f)
         df = pd.DataFrame.from_dict(json_data, orient="index")
-    return df 
+    return df
 
 def processing_func(jsonfilename):
     '''
@@ -65,26 +65,26 @@ def processing_func(jsonfilename):
     '''
     #Read the json file
     df = read_json_file(jsonfilename)
-    
+
     #Set the current time
     ct = datetime.datetime.now()
-    
+
     #Initialize empty dataframe
     df_label = pd.DataFrame()
     df_count = pd.DataFrame()
-    
+
     #Retrieve the label for each news and keep track of the counts
     for row in range(0,len(df)):
         doc = nlp(df['news'][row])
-        tuple_list = [(row,X.text, X.label_) for X in doc.ents]
+        tuple_list = [(int(df.index[row]),X.text, X.label_) for X in doc.ents]
         df_label = df_label.append(pd.DataFrame(tuple_list, columns =['row', 'text', 'label']))
-    
+
         labels = [x.label_ for x in doc.ents]
         labels_count = Counter(labels)
         df_current_count = pd.DataFrame.from_dict(labels_count, orient='index').reset_index()
         df_current_count = df_current_count.rename(columns={'index':'label', 0:'count'})
         df_current_count['timestamp']=ct
-        df_current_count['row']=row
+        df_current_count['row']=int(df.index[row])
         df_count = df_count.append(df_current_count)
 
     #Save the count to the database
@@ -121,12 +121,12 @@ def retrieve_count():
 # To reinitiate the database
 #docker-compose exec web python manage.py create_db
 
-#Credit 
+#Credit
 #https://towardsdatascience.com/building-a-flask-api-to-automatically-extract-named-entities-using-spacy-2fd3f54ebbc6
 #Susan Li
 
 #https://testdriven.io/blog/dockerizing-flask-with-postgres-gunicorn-and-nginx/
-#Michael Herman 
+#Michael Herman
 #
 
 '''
