@@ -38,8 +38,16 @@ docker-compose exec web python manage.py create_db
 ## Application Routes 
 
 - (`/`): index.html. The main page with the relevant buttons to upload the json file and to retrieve the count of the different entities 
-- (`/uploader`): Post request - that will take in a file (.json), of which the file can consist of either a single or multiple news articles that have been already processed and identify the entities within each of the news article.
+- (`/uploader`): Post request - that will take in a file (.json), of which the file can consist of either a single or multiple news articles that have been already processed and identify the entities within each of the news article. 
+```
+Sample input: can be found in NER/sample_input/sample_news_10.json. 
+Sample output:  {"0": "[{"row":0,"text":"Meyer Handelman Co. Increases Position","label":"ORG"}]}. 
+```
 - (`/retrieveCount`): Get request - that will retrieve count of the different entities of each unique news article from a PostgreSQL database (docker image). 
+```
+Sample output:
+[{"label":"CARDINAL","count":22,"row":0},{"label":"DATE","count":34,"row":0}]. row refers to the index of the news. 
+```
 
 ### Credit 
 * **Susan Li**  - https://towardsdatascience.com/building-a-flask-api-to-automatically-extract-named-entities-using-spacy-2fd3f54ebbc6 
