@@ -13,27 +13,21 @@ Python3
 ## Database:
 * PostgresSQL (docker image)
 
-## Running the flask application with an existing image on docker hub
-* The containerize flask application can be found at https://hub.docker.com/repository/docker/capstone05/ner  
-* Firstly, Run docker in the backgroud
-* Then, we can run the application with the following command: 
+## Running the flask application by building a new image with the docker file on the local machine
 ```
-docker run capstone05/ner
+#The directory 
+cd NER
+# To build the image
+docker-compose up -d --build
+
+# To initiate the database
+docker-compose exec web python manage.py create_db
 ```
 The applications will be running on docker_IP_Address:5000.
 
 ### Example: 
 ```
 http://192.168.99.100:5000/
-```
-
-## Running the flask application by building a new image with the docker file on the local machine
-```
-# To build the image
-docker-compose up -d --build
-
-# To initiate the database
-docker-compose exec web python manage.py create_db
 ```
 
 ## Application Routes 
