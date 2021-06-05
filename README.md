@@ -17,6 +17,7 @@ Python3
 ```
 #The directory 
 cd NER
+
 # To build the image
 docker-compose up -d --build
 
